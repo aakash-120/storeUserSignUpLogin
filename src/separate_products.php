@@ -72,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="separate_products.php">
+            <a class="nav-link" href="#">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
@@ -169,7 +169,7 @@
           <thead>
             <tr>
              
-              <th scope="col">ID</th>
+            <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Price</th>
               <th scope="col">Quantity</th>
@@ -178,7 +178,7 @@
               <th scope="col">Discount</th>
               <th scope="col">Tags</th>
               <th scope="col">Description</th>
-              <th scope="col">Action</th>
+              <th scope="col">Action</th
             </tr>           
           </thead>
 
@@ -186,7 +186,7 @@
           <tbody>
           <?php
 require "./classes/PRODUCT.php";
-PRODUCT::product_display();
+PRODUCT::separate_product_display();
   
 ?>
 

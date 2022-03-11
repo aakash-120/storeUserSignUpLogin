@@ -134,7 +134,7 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Products</h1>
+        <h1 class="h2">Customers</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -161,7 +161,7 @@
           <button type="submit" class="btn btn-primary">Search</button>
         </div>
         <div class="col-12">
-          <a class="btn btn-success" href="add-product.php">Add Product</a>
+          <a class="btn btn-success" href="add-customer.php">Add Users</a>
         </div>
       </form>
       <div class="table-responsive">
@@ -170,14 +170,11 @@
             <tr>
              
               <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Category</th>
-              <th scope="col">Image</th>
-              <th scope="col">Discount</th>
-              <th scope="col">Tags</th>
-              <th scope="col">Description</th>
+              <th scope="col">UserName</th>
+              <th scope="col">Email</th>
+              <th scope="col">Password</th>
+              <th scope="col">Role</th>
+              <th scope="col">Approval</th>
               <th scope="col">Action</th>
             </tr>           
           </thead>
@@ -185,25 +182,11 @@
 
           <tbody>
           <?php
-require "./classes/PRODUCT.php";
-PRODUCT::product_display();
+            require "./classes/User.php";
+            User::user_display();
   
 ?>
 
-            <!-- <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td><a href="#">Edit</a>&nbsp;<a href="#">Delete</a></td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td><a href="#">Edit</a>&nbsp;<a href="#">Delete</a></td>
-            </tr> -->
           </tbody>
         </table>
         <!-- <nav aria-label="Page navigation example">

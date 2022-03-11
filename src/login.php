@@ -2,7 +2,7 @@
 require "classes/utils.php";
 session_start();
 if (isset($_SESSION["user"])) {
-  print_r($_SESSION);
+   // print_r($_SESSION);
 }
 ?>
 <!doctype html>
@@ -66,30 +66,29 @@ if (isset($_SESSION["user"])) {
       <p>Don't have account Yet Register Here <a href = "register.php">Register</a></p>
       <p class="mt-5 mb-3 text-muted">&copy; CEDCOSS Technologies</p>
       <?php
-      if (isset($_POST["submit"])) {
-        $util = new Util();
-        $result =  $util->login($_POST["email"], $_POST["password"]);
-        switch ($result) {
-          case "notapproved":
-            echo "<div class='p-3 text-warning bg-light rounded'>Approval Pending</div>";
-            break;
-          case "incorrect":
-            echo "<div class='p-3 text-danger bg-light rounded'>email/password incorrect</div>";
-            break;
-          case "okuser":
-            header("location:user_dashboard.php");
+        if (isset($_POST["submit"])) {
+            $util = new Util();
+            $result =  $util->login($_POST["email"], $_POST["password"]);
+            switch ($result) {
+                case "notapproved":
+                    echo "<div class='p-3 text-warning bg-light rounded'>Approval Pending</div>";
+                    break;
+                case "incorrect":
+                    echo "<div class='p-3 text-danger bg-light rounded'>email/password incorrect</div>";
+                    break;
+                case "okuser":
+                    header("location:user_dashboard.php");
          // echo "user login";
-            break;
-          case "okadmin":
-            header("location:products.php");
-            break;
-          
+                    break;
+                case "okadmin":
+                    header("location:products.php");
+                    break;
+            }
         }
-      }
-      ?>
+        ?>
       <?php
-      echo isset($_GET["approval"]) ?  "<div class='p-3 text-warning bg-light rounded'>approval pending</div>" : "";
-      ?>
+        echo isset($_GET["approval"]) ?  "<div class='p-3 text-warning bg-light rounded'>approval pending</div>" : "";
+        ?>
 
     </form>
   </main>

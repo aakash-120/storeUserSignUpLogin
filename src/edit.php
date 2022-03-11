@@ -1,13 +1,13 @@
+
 <?php
 session_start();
 if (!isset($_SESSION["user"])) {
-  // if ($_SESSION["user"] != "admin@store.com") {
     header("location:dashboard.php");
-  // }
 }
 
-
 ?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -70,7 +70,7 @@ if (!isset($_SESSION["user"])) {
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="dashboard.html">
+              <a class="nav-link active" aria-current="page" href="products.php">
                 <span data-feather="home"></span>
                 Dashboard
               </a>
@@ -82,7 +82,7 @@ if (!isset($_SESSION["user"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="separate_products.php">
                 <span data-feather="shopping-cart"></span>
                 Products
               </a>
@@ -124,60 +124,58 @@ if (!isset($_SESSION["user"])) {
           </div>
         </div>
 
-        <form class="row g-3" method = "POST" action="" enctype="multipart/form-data">
+        <?php 
+        require "./classes/DB.php";
+        $fk = $_GET['id'];
+       // echo "fk = ".$fk;
+        $sql = "select * from Products where product_id = '$fk'";
+        $data = DB::getInstance()->query($sql);
+        $html = "";
+        while ($row = $data->fetch(PDO::FETCH_OBJ)) {
+  ?>
+
+        <form class="row g-3" method = "POST" action="dummy.php" enctype="multipart/form-data">
+        <div class="col-md-8">
+            <!-- <label for="inputEmail4" class="form-label">Product ID</label> -->
+            <input type="hidden" class="form-control" id="productId" name = "pid" value = "<?php echo $row->product_id ?>">
+          </div>
+        
           <div class="col-md-8">
             <label for="inputEmail4" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="productName" name = "pname" required>
+            <input type="text" class="form-control" id="productName" name = "pname" value = "<?php echo $row->product_name ?>" required>
           </div>
           <div class="col-md-8">
             <label for="inputPassword4" class="form-label">Product Price</label>
-            <input type="number" class="form-control" id="productPrice" name = "pprice" required>
+            <input type="number" class="form-control" id="productPrice" name = "pprice" value = "<?php echo $row->product_price ?>" required>
           </div>
           <div class="col-8">
           <label for="inputPassword4" class="form-label">Discount</label>
-            <input type="number" class="form-control" id="discountPrice" name = "dprice" required>
+            <input type="number" class="form-control" id="discountPrice" name = "dprice" value = "<?php echo $row->product_discount ?>" required>
           </div>
           <div class="col-8">
             <label for="inputAddress" class="form-label">Product Quantity</label>
-            <input type="number" class="form-control" id="productQuantity" name = "pquantity"required >
+            <input type="number" class="form-control" id="productQuantity" name = "pquantity" value = "<?php echo $row->product_quantity ?>" required >
           </div>
           <div class="col-8">
             <label for="inputAddress2" class="form-label">Product Category </label>
-            <input type="text" class="form-control" id="ProductCategory" name = "pcategory" required>
+            <input type="text" class="form-control" id="ProductCategory" name = "pcategory" value = "<?php echo $row->product_category ?>" required>
           </div>
           <div class="col-8">
             <label for="inputAddress2" class="form-label">Product Tags </label>
-            <input type="text" class="form-control" id="ProductTags" name = "ptags" required>
+            <input type="text" class="form-control" id="ProductTags" name = "ptags" value = "<?php echo $row->product_tags ?>" required>
           </div>
           <div class="col-md-8">
             <label for="inputCity" class="form-label">Product Description</label>
-            <input type="text" class="form-control" id="productDescription" name = "pdescription" required>
+            <input type="text" class="form-control" id="productDescription" name = "pdescription" value = "<?php echo $row->product_description ?>" required>
           </div>
           <div class="col-md-8">
             <label for="inputCity" class="form-label">Product Image</label>
-            <input type="file" class="form-control" id="productImage" name = "pimage" required>
+            <input type="file" class="form-control" id="productImage" name = "pimage" value = "<?php echo $row->product_image ?>" required>
           </div>
 
+
+      <?php } ?>
       
-          <!-- <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-          </div>
-          <div class="col-12">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div> -->
           <div class="col-12">
             <button type="submit" class="btn btn-primary" name = "submit_button">Add Product</button>
           </div>
@@ -185,8 +183,6 @@ if (!isset($_SESSION["user"])) {
       </main>
     </div>
   </div>
-
-
 
   <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
@@ -196,25 +192,31 @@ if (!isset($_SESSION["user"])) {
 
 
 <?php
-require "classes/PRODUCT.php";
+// require "classes/PRODUCT.php";
 
-if(isset($_POST["submit_button"]))
-{
+// if(isset($_GET["submit_button"]))
+// {
+// $pname =  $_GET["pname"];
+// $pprice =  $_GET["pprice"];
+// $pquantity =  $_GET["pquantity"];
+// $pcategory =  $_GET["pcategory"];
+// $prating =  $_GET["prating"];
 
-$pname =  $_POST["pname"];
-$pprice =  $_POST["pprice"];
-$pquantity =  $_POST["pquantity"];
-$pcategory =  $_POST["pcategory"];
-$file_name = $_FILES['pimage']['name'];
-$file_tmp_name = $_FILES['pimage']['tmp_name'];
-move_uploaded_file($file_tmp_name , "uploads/".$file_name);
-$dprice =  $_POST["dprice"];
-$ptags =  $_POST["ptags"];
-$pdescription =  $_POST["pdescription"];
+// $product_obj = new PRODUCT($pname, $pprice, $pquantity ,$pcategory,$prating);
+// $product_obj->addProduct();
 
-$product_obj = new PRODUCT($pname, $pprice, $pquantity ,$pcategory,$file_name,$dprice,$ptags,$pdescription);
-$product_obj->addProduct();
 
-}
+
+// echo $pname;
+// echo $pprice;
+// echo $pquantity;
+// echo $pcategory;
+// echo $prating;
+
+
+// }
 
 ?>
+
+
+

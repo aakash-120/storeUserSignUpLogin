@@ -70,7 +70,7 @@ if (!isset($_SESSION["user"])) {
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="dashboard.html">
+              <a class="nav-link active" aria-current="page" href="products.php">
                 <span data-feather="home"></span>
                 Dashboard
               </a>
@@ -82,13 +82,13 @@ if (!isset($_SESSION["user"])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="products.php">
                 <span data-feather="shopping-cart"></span>
                 Products
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="customers.php">
                 <span data-feather="users"></span>
                 Customers
               </a>
@@ -111,7 +111,7 @@ if (!isset($_SESSION["user"])) {
 
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Add Product</h1>
+          <h1 class="h2">Add Users</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
               <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -124,62 +124,22 @@ if (!isset($_SESSION["user"])) {
           </div>
         </div>
 
-        <form class="row g-3" method = "POST" action="" enctype="multipart/form-data">
+        <form class="row g-3" method = "GET" action="">
           <div class="col-md-8">
-            <label for="inputEmail4" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="productName" name = "pname" required>
-          </div>
-          <div class="col-md-8">
-            <label for="inputPassword4" class="form-label">Product Price</label>
-            <input type="number" class="form-control" id="productPrice" name = "pprice" required>
-          </div>
-          <div class="col-8">
-          <label for="inputPassword4" class="form-label">Discount</label>
-            <input type="number" class="form-control" id="discountPrice" name = "dprice" required>
-          </div>
-          <div class="col-8">
-            <label for="inputAddress" class="form-label">Product Quantity</label>
-            <input type="number" class="form-control" id="productQuantity" name = "pquantity"required >
-          </div>
-          <div class="col-8">
-            <label for="inputAddress2" class="form-label">Product Category </label>
-            <input type="text" class="form-control" id="ProductCategory" name = "pcategory" required>
-          </div>
-          <div class="col-8">
-            <label for="inputAddress2" class="form-label">Product Tags </label>
-            <input type="text" class="form-control" id="ProductTags" name = "ptags" required>
+            <label for="inputEmail4" class="form-label">UserName</label>
+            <input type="text" class="form-control" id="uname" name = "uname">
           </div>
           <div class="col-md-8">
-            <label for="inputCity" class="form-label">Product Description</label>
-            <input type="text" class="form-control" id="productDescription" name = "pdescription" required>
+            <label for="inputPassword4" class="form-label">Email</label>
+            <input type="email" class="form-control" id="uemail" name = "uemail">
           </div>
-          <div class="col-md-8">
-            <label for="inputCity" class="form-label">Product Image</label>
-            <input type="file" class="form-control" id="productImage" name = "pimage" required>
+          <div class="col-8">
+            <label for="inputAddress" class="form-label">Password</label>
+            <input type="number" class="form-control" id="upassword" name = "upassword" >
           </div>
-
-      
-          <!-- <div class="col-md-4">
-            <label for="inputState" class="form-label">State</label>
-            <select id="inputState" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label for="inputZip" class="form-label">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
-          </div>
+        
           <div class="col-12">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div> -->
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary" name = "submit_button">Add Product</button>
+            <button type="submit" class="btn btn-primary" name = "submit_button">Add User</button>
           </div>
         </form>
       </main>
@@ -196,24 +156,26 @@ if (!isset($_SESSION["user"])) {
 
 
 <?php
-require "classes/PRODUCT.php";
+require "classes/User.php";
 
-if(isset($_POST["submit_button"]))
+if(isset($_GET["submit_button"]))
 {
+$uname =  $_GET["uname"];
+$uemail =  $_GET["uemail"];
+$upassword =  $_GET["upassword"];
+// $utype =  $_GET["utype"];
+// $uapproved =  $_GET["uapproved"];
 
-$pname =  $_POST["pname"];
-$pprice =  $_POST["pprice"];
-$pquantity =  $_POST["pquantity"];
-$pcategory =  $_POST["pcategory"];
-$file_name = $_FILES['pimage']['name'];
-$file_tmp_name = $_FILES['pimage']['tmp_name'];
-move_uploaded_file($file_tmp_name , "uploads/".$file_name);
-$dprice =  $_POST["dprice"];
-$ptags =  $_POST["ptags"];
-$pdescription =  $_POST["pdescription"];
+$user_obj = new User($uname, $upassword, $uemail);
+$user_obj->addUser();
+//header("location:customers.php");
 
-$product_obj = new PRODUCT($pname, $pprice, $pquantity ,$pcategory,$file_name,$dprice,$ptags,$pdescription);
-$product_obj->addProduct();
+
+// echo $uname;
+// echo $uemail;
+// echo $upassword;
+
+
 
 }
 
