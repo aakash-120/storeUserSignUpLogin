@@ -257,7 +257,7 @@ session_start();
                                 <div class="clear"></div>
                             </form>
 
-                            <form enctype="multipart/form-data" action="" class="checkout" method="post" name="checkout">
+                            <form enctype="multipart/form-data" action="unset.php" class="checkout" method="post" name="checkout">
 
                                 <div id="customer_details" class="col2-set">
                                     <div class="col-1">
