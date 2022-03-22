@@ -1,3 +1,14 @@
+<?php
+require "classes/UserView.php";
+session_start();
+
+// echo "<pre>";
+// print_r($_SESSION);
+// echo "</pre>";
+
+?>
+
+
 <!DOCTYPE html>
 <!--
 	ustora by freshdesignweb.com
@@ -5,23 +16,24 @@
 	URL: https://www.freshdesignweb.com/ustora/
 -->
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Checkout Page - Ustora Demo</title>
-    
+
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
-    
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/owl.carousel.css">
     <link rel="stylesheet" href="style.css">
@@ -33,9 +45,10 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
-  <body>
-   
+</head>
+
+<body>
+
     <div class="header-area">
         <div class="container">
             <div class="row">
@@ -50,7 +63,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="header-right">
                         <ul class="list-unstyled list-inline">
@@ -77,7 +90,7 @@
             </div>
         </div>
     </div> <!-- End header area -->
-    
+
     <div class="site-branding-area">
         <div class="container">
             <div class="row">
@@ -86,7 +99,7 @@
                         <h1><a href="./"><img src="img/logo.png"></a></h1>
                     </div>
                 </div>
-                
+
                 <div class="col-sm-6">
                     <div class="shopping-item">
                         <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
@@ -95,7 +108,7 @@
             </div>
         </div>
     </div> <!-- End site branding area -->
-    
+
     <div class="mainmenu-area">
         <div class="container">
             <div class="row">
@@ -106,7 +119,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                </div> 
+                </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="user_dashboard.php">Home</a></li>
@@ -118,11 +131,11 @@
                         <li><a href="#">Others</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
-                </div>  
+                </div>
             </div>
         </div>
     </div> <!-- End mainmenu area -->
-    
+
     <div class="product-big-title-area">
         <div class="container">
             <div class="row">
@@ -134,8 +147,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <div class="single-product-area">
         <div class="zigzag-bottom"></div>
         <div class="container">
@@ -148,7 +161,7 @@
                             <input type="submit" value="Search">
                         </form>
                     </div>
-                    
+
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Products</h2>
                         <div class="thubmnail-recent">
@@ -156,31 +169,31 @@
                             <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
+                            </div>
                         </div>
                         <div class="thubmnail-recent">
                             <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
+                            </div>
                         </div>
                         <div class="thubmnail-recent">
                             <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
+                            </div>
                         </div>
                         <div class="thubmnail-recent">
                             <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
                             <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
                             <div class="product-sidebar-price">
                                 <ins>$700.00</ins> <del>$100.00</del>
-                            </div>                             
+                            </div>
                         </div>
                     </div>
-                    
+
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Recent Posts</h2>
                         <ul>
@@ -192,7 +205,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
@@ -244,7 +257,7 @@
                                 <div class="clear"></div>
                             </form>
 
-                            <form enctype="multipart/form-data" action="#" class="checkout" method="post" name="checkout">
+                            <form enctype="multipart/form-data" action="" class="checkout" method="post" name="checkout">
 
                                 <div id="customer_details" class="col2-set">
                                     <div class="col-1">
@@ -578,9 +591,9 @@
                                     <div class="col-2">
                                         <div class="woocommerce-shipping-fields">
                                             <h3 id="ship-to-different-address">
-                        <label class="checkbox" for="ship-to-different-address-checkbox">Ship to a different address?</label>
-                        <input type="checkbox" value="1" name="ship_to_different_address" checked="checked" class="input-checkbox" id="ship-to-different-address-checkbox">
-                        </h3>
+                                                <label class="checkbox" for="ship-to-different-address-checkbox">Ship to a different address?</label>
+                                                <input type="checkbox" value="1" name="ship_to_different_address" checked="checked" class="input-checkbox" id="ship-to-different-address-checkbox">
+                                            </h3>
                                             <div class="shipping_address" style="display: block;">
                                                 <p id="shipping_country_field" class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated">
                                                     <label class="" for="shipping_country">Country <abbr title="required" class="required">*</abbr>
@@ -914,7 +927,8 @@
                                                 <td class="product-name">
                                                     Ship Your Idea <strong class="product-quantity">× 1</strong> </td>
                                                 <td class="product-total">
-                                                    <span class="amount">£15.00</span> </td>
+                                                    <span class="amount">£15.00</span>
+                                                </td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -983,8 +997,8 @@
                                 </div>
                             </form>
 
-                        </div>                       
-                    </div>                    
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1007,7 +1021,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">User Navigation </h2>
@@ -1017,10 +1031,10 @@
                             <li><a href="">Wishlist</a></li>
                             <li><a href="">Vendor contact</a></li>
                             <li><a href="">Front page</a></li>
-                        </ul>                        
+                        </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-menu">
                         <h2 class="footer-wid-title">Categories</h2>
@@ -1030,10 +1044,10 @@
                             <li><a href="">LED TV</a></li>
                             <li><a href="">Computer</a></li>
                             <li><a href="">Gadets</a></li>
-                        </ul>                        
+                        </ul>
                     </div>
                 </div>
-                
+
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-newsletter">
                         <h2 class="footer-wid-title">Newsletter</h2>
@@ -1055,7 +1069,7 @@
                         <p>&copy; 2015 uCommerce. All Rights Reserved. <a href="http://www.freshdesignweb.com" target="_blank">freshDesignweb.com</a></p>
                     </div>
                 </div>
-                
+
                 <div class="col-md-4">
                     <div class="footer-card-icon">
                         <i class="fa fa-cc-discover"></i>
@@ -1067,21 +1081,71 @@
             </div>
         </div>
     </div>
-   
+
     <!-- Latest jQuery form server -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
-    
+
     <!-- Bootstrap JS form CDN -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
+
     <!-- jQuery sticky menu -->
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.sticky.js"></script>
-    
+
     <!-- jQuery easing -->
     <script src="js/jquery.easing.1.3.min.js"></script>
-    
+
     <!-- Main Script -->
     <script src="js/main.js"></script>
-  </body>
+</body>
+
 </html>
+
+
+
+<?php
+require "classes/UserCheckout.php";
+
+if (isset($_POST["woocommerce_checkout_place_order"])) {
+
+    // echo "<pre>";
+    // print_r($_POST);
+    // echo "user id = ".$_SESSION['id'];
+    // echo "</pre>";
+
+
+    $billing_country =  $_POST["billing_country"];
+    $billing_first_name =  $_POST["billing_first_name"];
+    $billing_last_name =  $_POST["billing_last_name"];
+    $billing_company =  $_POST["billing_company"];
+    $billing_address_1 =  $_POST["billing_address_1"];
+    $billing_address_2 =  $_POST["billing_address_2"];
+    $billing_city =  $_POST["billing_city"];
+    $billing_state =  $_POST["billing_state"];
+    $billing_postcode =  $_POST["billing_postcode"];
+    $billing_email =  $_POST["billing_email"];
+    $billing_phone =  $_POST["billing_phone"];
+    $account_password =  $_POST["account_password"];
+    $ship_to_different_address =  $_POST["ship_to_different_address"];
+    $shipping_country =  $_POST["shipping_country"];
+    $shipping_first_name =  $_POST["shipping_first_name"];
+    $shipping_last_name =  $_POST["shipping_last_name"];
+    $shipping_company =  $_POST["shipping_company"];
+    $shipping_address_1 =  $_POST["shipping_address_1"];
+    $shipping_address_2 =  $_POST["shipping_address_2"];
+    $shipping_city =  $_POST["shipping_city"];
+    $shipping_state =  $_POST["shipping_state"];
+    $shipping_postcode =  $_POST["shipping_postcode"];
+    $order_comments =  $_POST["order_comments"];
+    $shipping_method =  $_POST["shipping_method"][0];
+    $payment_method =  $_POST["payment_method"];
+
+    $user_id_from_session  = $_SESSION['id'];
+
+
+   $product_obj = new UserCheckout($billing_country, $billing_first_name, $billing_last_name, $billing_company, $billing_address_1, $billing_address_2, $billing_city, $billing_state, $billing_postcode, $billing_email, $billing_phone, $account_password, $ship_to_different_address, $shipping_country, $shipping_first_name, $shipping_last_name, $shipping_company, $shipping_address_1, $shipping_address_2, $shipping_city, $shipping_state, $shipping_postcode, $order_comments, $shipping_method ,$payment_method , $user_id_from_session );
+   $product_obj->addcheckoutDetail();
+
+}
+
+?>

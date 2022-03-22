@@ -33,92 +33,18 @@ class UserViewCLASS extends DB
     }
 
 
-    public static function cartDisplay($pid)
-    {
-
-        $sql = "select * from Products where product_id='$pid'";
-
-        $data = DB::getInstance()->query($sql);
-        
-        print_r($_POST);
-        
-      //  echo "--------------";
-      //  print_r($_GET);
-
-      
-      $default_quantity =1;
-    //   if(isset($_POST['submitMinus']))
-    //   {
-         
-    //   }
-    //   else if(isset($_POST['submitPlus']))
-    //   {
-    //     $default_quantity += 1;
-    //   }
-
-     
-      if(isset($_POST['box']))
-      {
-        if(isset($_POST['submitMinus']))
-        {
-            $default_quantity = $_POST['box'] - 1;
-        }
-        else if(isset($_POST['submitPlus']))
-        {
-          $default_quantity += $_POST['box'];
-        }
-      }
-
-
-        $html1 = "<br>";
-        while ($row = $data->fetch(PDO::FETCH_OBJ)) {
-            $html1 .= '<td class="product-remove">
-            <a title="Remove this item" class="remove" href="#">×</a> 
-        </td>
-
-        <td class="product-thumbnail">
-            <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src=./uploads/' . $row->product_image . '></a>
-        </td>
-
-        <td class="product-name">
-            <a href="single-product.html">' . $row->product_name . '</a> 
-        </td>
-
-        <td class="product-price">
-            <span class="amount">£' . ($row->product_price - ($row->product_price * ($row->product_discount / 100))) . '</span> 
-        </td>
-       
-        <td class="product-quantity">
-            <div class="quantity buttons_added">
-            <form  method = "get">
-                <input type="submit" name="submitMinus" class="minus" value="-">
-                <input type="number" size="4" class="input-text qty text" title="Qty" name = "box" value="'.$default_quantity.'" min="0" step="1" readonly>
-                
-                <input type="submit" name="submitPlus" class="plus" value="+">
-            </form>
-            </div>
-        </td>
-
-        <td class="product-subtotal">
-            <span class="amount">£' . ($row->product_price - ($row->product_price * ($row->product_discount / 100))) * $default_quantity . '</span> 
-        </td>';
-        }
-        echo $html1;
-    }
-
 
     public static function cartDisplaySubtotal($pid)
     {
-      
+
         $html3 = "";
         $sql = "select * from Products where product_id='$pid'";
 
         $data = DB::getInstance()->query($sql);
-        while ($row = $data->fetch(PDO::FETCH_OBJ)) 
-        {
-        $html3 .= '  <tr class="cart-subtotal">
+        while ($row = $data->fetch(PDO::FETCH_OBJ)) {
+            $html3 .= '  <tr class="cart-subtotal">
         <th>Cart Subtotal</th>
-        <td><span class="amount">£'.$row->product_price.'</span></td>
+        <td><span class="amount">£' . $row->product_price . '</span></td>
     </tr>
 
     <tr class="shipping">
@@ -128,11 +54,69 @@ class UserViewCLASS extends DB
 
     <tr class="order-total">
         <th>Order Total</th>
-        <td><strong><span class="amount">£'.$row->product_price.'</span></strong> </td>
+        <td><strong><span class="amount">£' . $row->product_price . '</span></strong> </td>
     </tr>';
         }
         echo $html3;
     }
 
 
+
+
+    public static function itemAddedToCart($cart_total)
+    {
+        
+        // echo "<pre>inside item addto cart functoin";
+        // print_r($_SESSION);
+        // echo "</pre>";
+
+        foreach ($_SESSION['cart'] as $key => $value) {
+
+            echo $_SESSION['cart'][$key]['pid'];
+            $p = $_SESSION['cart'][$key]['pid'];
+            $q = $_SESSION['cart'][$key]['quantity'];
+           
+            $html3 = "";
+            $sql = "select * from Products where product_id='$p'";
+
+            $data = DB::getInstance()->query($sql);
+            while ($row = $data->fetch(PDO::FETCH_OBJ)) {
+
+                $html3 .= '<tr>   <td class="product-remove">
+                <a title="Remove this item" class="remove" href="cart.php?action='.$row->product_id.'">×</a> 
+            </td>
+
+            <td class="product-thumbnail">
+                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src=./uploads/' . $row->product_image . '></a>
+            </td>
+
+            <td class="product-name">
+                <a href="single-product.php">' . $row->product_name . '</a> 
+            </td>
+
+            <td class="product-price">
+                <span class="amount">£' . $row->product_price . '</span> 
+            </td>
+
+            <td class="product-quantity">
+                <div class="quantity buttons_added">
+                <a href="cart.php?id='.$row->product_id.'&button=minus">[-]</a>
+                  
+                    <input type="number" size="4" class="input-text qty text" title="Qty" value="'.$q.'" min="0" step="1">
+                   
+                    <a href="cart.php?id='.$row->product_id.'&button=plus">[+]</a>
+                </div>
+            </td>
+
+            <td class="product-subtotal">
+                <span class="amount">£' . $q * ($row->product_price - ($row->product_price * ($row->product_discount / 100))) . '</span> 
+            </td>';
+                $cart_total += $q*($row->product_price - ($row->product_price * ($row->product_discount / 100)));
+            }
+           // $html3 .= '<h1>' . $cart_total . '</h1>';
+            $html3 .= '</tr>';
+            echo $html3;
+        }
+        return $cart_total;
+    }
 }

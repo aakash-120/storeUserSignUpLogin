@@ -1,10 +1,86 @@
 <?php
 require "classes/UserView.php";
 session_start();
-if (isset($_SESSION["user"])) {
-    $uid = $_SESSION['id'];
-    echo "user_id = " . $uid;
+
+//echo "aakash" . $_GET['pid'];
+// $_SESSION['pid'] = $_GET['pid'];
+if (!isset($_SESSION['cart'])) {
+    // echo "cart not set";
+    $_SESSION['cart'] = array();
+    array_push($_SESSION['cart'], array("pid" => $_GET['pid'], "quantity" => 1, "uid" => $_SESSION['id']));
+} else {
+    // echo "cart already set";
+    $flag = 0;
+    foreach ($_SESSION['cart'] as $key => $value) {
+        //  echo "<br>";
+        // echo "get value".$_GET['pid']."------------------session value".$_SESSION['cart'][$key]['pid'];
+        // echo $_SESSION['cart'][$key]['quantity'];
+        if(isset($_GET['pid']))
+        {
+
+        if ($_GET['pid'] == $_SESSION['cart'][$key]['pid']) {
+            //   echo "when matched it increase quantity";
+            $_SESSION['cart'][$key]['quantity'] += 1;
+            $flag = 1;
+        }
+
+    }
+    }
+
+    if(isset($_GET['pid']))
+    {
+
+    if ($flag == 0) {
+        // echo "when not match it add a new product";
+        array_push($_SESSION['cart'], array("pid" => $_GET['pid'], "quantity" => 1, "uid" => $_SESSION['id']));
+    }
+    }
+
+
 }
+
+// echo '<pre>';
+// var_dump($_SESSION);
+
+// echo '</pre>';
+
+
+if (isset($_GET['action'])) {
+    //echo "get from delete button";
+    $did_get = $_GET['action'];
+    //echo $did_get;
+
+    foreach ($_SESSION['cart'] as $key => $value) {
+        if ($did_get == $_SESSION['cart'][$key]['pid']) {
+            // echo "hello world";
+            unset($_SESSION['cart'][$key]['pid']);
+        }
+    }
+}
+
+if (isset($_GET['button'])) {
+    $button_symbol = $_GET['button'];
+    $button_id = $_GET['id'];
+
+   foreach ($_SESSION['cart'] as $key => $value) {
+    if ($button_id == $_SESSION['cart'][$key]['pid']) {
+        // echo "hello world";
+        if($button_symbol == 'plus')
+        {
+            $_SESSION['cart'][$key]['quantity'] += 1;
+        }
+
+        if($button_symbol == 'minus' &&  $_SESSION['cart'][$key]['quantity'] > 1)
+        {
+            $_SESSION['cart'][$key]['quantity'] -= 1;
+
+        }
+    }
+}
+   
+
+}
+
 
 
 ?>
@@ -210,7 +286,7 @@ if (isset($_SESSION["user"])) {
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <form method="post">
+                            <form method="post" action = "checkout.php">
                                 <table cellspacing="0" class="shop_table cart">
                                     <thead>
                                         <tr>
@@ -226,10 +302,15 @@ if (isset($_SESSION["user"])) {
                                         <tr class="cart_item">
 
                                             <?php
-                                           // print_r($_POST);
-                                            $pid = $_GET['pid'];
-                                            // require "./classes/UserView.php";
-                                            UserViewCLASS::cartDisplay($pid);
+                                            if(isset($_GET['pid'])){
+                                            $pid = $_GET['pid'];}
+
+                                          //  echo $pid;
+                                            $cart_total = 0;
+                                            //  require "./classes/UserView.php";
+                                            $cp = UserViewCLASS::itemAddedToCart($cart_total);
+                                           // echo "return.$cp";
+
                                             ?>
                                             <!--  <td class="product-remove">
                                                 <a title="Remove this item" class="remove" href="#">×</a> 
@@ -309,23 +390,23 @@ if (isset($_SESSION["user"])) {
                                     <table cellspacing="0">
                                         <tbody>
                                             <?php
-                                            UserViewCLASS::cartDisplaySubtotal($pid);
+                                            //  UserViewCLASS::cartDisplaySubtotal($pid);
                                             ?>
 
-                                            <!-- <tr class="cart-subtotal">
+                                            <tr class="cart-subtotal">
                                                 <th>Cart Subtotal</th>
-                                                <td><span class="amount">£15.00</span></td>
+                                                <td><span class="amount">£<?php echo $cp ?></span></td>
                                             </tr>
 
                                             <tr class="shipping">
                                                 <th>Shipping and Handling</th>
-                                                <td>Free Shipping</td>
+                                                <td>£0</td>
                                             </tr>
 
                                             <tr class="order-total">
                                                 <th>Order Total</th>
-                                                <td><strong><span class="amount">£15.00</span></strong> </td>
-                                            </tr> -->
+                                                <td><strong><span class="amount">£<?php echo $cp ?></span></strong> </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
